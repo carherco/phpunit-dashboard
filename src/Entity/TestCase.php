@@ -11,6 +11,7 @@ class TestCase
     const Passed = 'passed';
     const Failed = 'failed';
     const SKIPPED = 'skypped';
+    const ERROR = 'error';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -47,6 +48,9 @@ class TestCase
     #[ORM\ManyToOne(targetEntity: TestSuite::class, inversedBy: 'testCases')]
     #[ORM\JoinColumn(nullable: false)]
     private $testSuite;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $failureType;
 
     public function getId(): ?int
     {
@@ -169,6 +173,18 @@ class TestCase
     public function setTestSuite(?TestSuite $testSuite): self
     {
         $this->testSuite = $testSuite;
+
+        return $this;
+    }
+
+    public function getFailureType(): ?string
+    {
+        return $this->failureType;
+    }
+
+    public function setFailureType(?string $failureType): self
+    {
+        $this->failureType = $failureType;
 
         return $this;
     }

@@ -51,6 +51,48 @@ class JunitXMLReaderTest extends PHPUnitTestCase
   }
 
   /**
+   * @test Estructura de una suite con tests con error
+   */
+  public function testErrors() {
+    // Given
+    $xml = '<testsuites>
+              <testsuite name="/Users/carlos/mamp/PruebasUnitarias/tests" tests="114" assertions="125" errors="0" warnings="0" failures="3" skipped="4" time="0.022517">
+                <testsuite name="AppExtensionTest" file="/Users/carlos/mamp/PruebasUnitarias/tests/AppExtensionTest.php" tests="21" assertions="20" errors="0" warnings="0" failures="3" skipped="1" time="0.008897">
+                  <testsuite name="AppExtensionTest::testSfCalculator6" tests="8" assertions="8" errors="0" warnings="0" failures="3" skipped="0" time="0.003020">
+                    <testcase name="testAlIngresar100EnCuentaVaciaElSaldoEs100" class="CuentaTest" classname="CuentaTest" file="/Users/carlos/mamp/PruebasUnitarias/tests/misc/CuentaTest.php" line="25" assertions="1" time="0.000377">
+                      <error type="DivisionByZeroError">CuentaTest::testAlIngresar100EnCuentaVaciaElSaldoEs100
+              DivisionByZeroError: Division by zero
+              
+              /Users/carlos/mamp/PruebasUnitarias/tests/misc/CuentaTest.php:30</error>
+                    </testcase>
+                    <testcase name="testSfCalculator6 with data set &quot;con decimales .99&quot;" class="AppExtensionTest" classname="AppExtensionTest" file="/Users/carlos/mamp/PruebasUnitarias/tests/AppExtensionTest.php" line="67" assertions="1" time="0.000044"/>
+                  </testsuite>  
+                </testsuite>
+              </testsuite>
+            </testsuites>
+            ';
+
+    $reader = new JunitXMLReader();
+
+    // Act
+    $report = $reader->parse($xml);
+
+
+    // Expected
+    $rootSuite = $report->getTestSuites()[0];
+
+    $suiteWithErrorTests = $rootSuite->getChildSuites()[0]->getChildSuites()[0];
+
+    self::assertCount(2, $suiteWithErrorTests->getTestCases());
+    self::assertEquals(TestCase::ERROR, $suiteWithErrorTests->getTestCases()[0]->getStatus());
+    self::assertEquals(TestCase::Passed, $suiteWithErrorTests->getTestCases()[1]->getStatus());
+
+    // Mensajes de fallo
+    self::assertEquals('DivisionByZeroError', $suiteWithErrorTests->getTestCases()[0]->getFailureType());
+    self::assertStringContainsString('DivisionByZeroError: Division by zero', $suiteWithErrorTests->getTestCases()[0]->getMessage());
+  }
+
+  /**
    * @test Estructura de una suite con tests que fallan
    */
   public function testFailures() {
@@ -113,6 +155,7 @@ class JunitXMLReaderTest extends PHPUnitTestCase
     self::assertEquals(TestCase::Passed, $suiteWithFailedTests->getTestCases()[7]->getStatus());
 
     // Mensajes de fallo
+    self::assertEquals('PHPUnit\Framework\ExpectationFailedException', $suiteWithFailedTests->getTestCases()[0]->getFailureType());
     self::assertStringContainsString('Mensaje del programador en el assert', $suiteWithFailedTests->getTestCases()[0]->getMessage());
     self::assertStringContainsString('Failed asserting that 20.99 matches expected 20.01.', $suiteWithFailedTests->getTestCases()[0]->getMessage());
     self::assertNull($suiteWithFailedTests->getTestCases()[3]->getMessage());

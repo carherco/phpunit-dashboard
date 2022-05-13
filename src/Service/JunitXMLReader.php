@@ -68,7 +68,12 @@ class JunitXMLReader
 
     if(isset($xmlTestCase->failure)) {
       $testCase->setStatus(TestCase::Failed);
+      $testCase->setFailureType((string)$xmlTestCase->failure['type']);
       $testCase->setMessage((string)$xmlTestCase->failure);
+    } else if(isset($xmlTestCase->error)) {
+      $testCase->setStatus(TestCase::ERROR);
+      $testCase->setFailureType((string)$xmlTestCase->error['type']);
+      $testCase->setMessage((string)$xmlTestCase->error);
     } else if(isset($xmlTestCase->skipped)) {
       $testCase->setStatus(TestCase::SKIPPED);
     } else {
