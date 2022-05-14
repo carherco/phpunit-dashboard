@@ -39,7 +39,7 @@ class TestReport
     #[ORM\Column(type: 'float')]
     private $time;
 
-    #[ORM\OneToMany(mappedBy: 'testReport', targetEntity: TestSuite::class)]
+    #[ORM\OneToMany(mappedBy: 'testReport', targetEntity: TestSuite::class, cascade:['persist'])]
     private $testSuites;
 
     public function __construct()

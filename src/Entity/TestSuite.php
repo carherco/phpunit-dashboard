@@ -42,10 +42,10 @@ class TestSuite
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'childSuites')]
     private $parentSuite;
 
-    #[ORM\OneToMany(mappedBy: 'parentSuite', targetEntity: self::class)]
+    #[ORM\OneToMany(mappedBy: 'parentSuite', targetEntity: self::class, cascade:['persist'])]
     private $childSuites;
 
-    #[ORM\OneToMany(mappedBy: 'testSuite', targetEntity: TestCase::class)]
+    #[ORM\OneToMany(mappedBy: 'testSuite', targetEntity: TestCase::class, cascade:['persist'])]
     private $testCases;
 
     #[ORM\ManyToOne(targetEntity: TestReport::class, inversedBy: 'testSuites')]
