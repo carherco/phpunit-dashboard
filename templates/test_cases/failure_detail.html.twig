@@ -1,0 +1,14 @@
+<div class="card card-danger">
+    <div class="card-header">
+        <h4 class="card-title w-100">
+            <a class="d-block w-100 collapsed" data-toggle="collapse" href="#collapse{{ testCase.id }}" aria-expanded="false">
+                {{ testCase.failureType }} - {{ testCase.name }}
+            </a>
+        </h4>
+    </div>
+    <div id="collapse{{ testCase.id }}" class="collapse" data-parent="#accordion" style="">
+        <div class="card-body">
+            <pre>{{ testCase.message }}</pre>
+        </div>
+    </div>
+</div>

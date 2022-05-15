@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Report List</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('report_list') }}">Report List</a></li>
                         <li class="breadcrumb-item active">Report Detail</li>
                     </ol>
                 </div><!-- /.col -->
@@ -83,7 +83,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Failures & Errors</h3>
@@ -95,20 +95,7 @@
 
                                 {% for testCase in testCasesWithErrorsOrFailures %}
 
-                                    <div class="card card-danger">
-                                        <div class="card-header">
-                                            <h4 class="card-title w-100">
-                                                <a class="d-block w-100 collapsed" data-toggle="collapse" href="#collapse{{ testCase.id }}" aria-expanded="false">
-                                                    {{ testCase.failureType }} - {{ testCase.name }}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapse{{ testCase.id }}" class="collapse" data-parent="#accordion" style="">
-                                            <div class="card-body">
-                                                <pre>{{ testCase.message }}</pre>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {{ include('test_cases/failure_detail.html.twig', {testCase: testCase}) }}
 
                                 {% else %}
                                     Congratulations! There are no errors.
