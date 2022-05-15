@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TestCaseRepository::class)]
 class TestCase
 {
-    const Passed = 'passed';
-    const Failed = 'failed';
+    const PASSED = 'passed';
+    const FAILED = 'failed';
     const SKIPPED = 'skypped';
     const ERROR = 'error';
 
@@ -51,6 +51,10 @@ class TestCase
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $failureType;
+
+    #[ORM\ManyToOne(targetEntity: TestReport::class, inversedBy: 'testCases')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $report;
 
     public function getId(): ?int
     {
@@ -185,6 +189,18 @@ class TestCase
     public function setFailureType(?string $failureType): self
     {
         $this->failureType = $failureType;
+
+        return $this;
+    }
+
+    public function getReport(): ?TestReport
+    {
+        return $this->report;
+    }
+
+    public function setReport(?TestReport $report): self
+    {
+        $this->report = $report;
 
         return $this;
     }

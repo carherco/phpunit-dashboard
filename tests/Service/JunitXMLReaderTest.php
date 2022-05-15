@@ -47,7 +47,10 @@ class JunitXMLReaderTest extends PHPUnitTestCase
 
     $suite = $rootSuite->getChildSuites()[0];
 
-    self::assertCount(2, $suite->getTestCases());
+    $testCases = $suite->getTestCases();
+    self::assertCount(2, $testCases);
+    self::assertEquals($report, $testCases[0]->getReport());
+    self::assertEquals($report, $testCases[1]->getReport());
   }
 
   /**
@@ -85,7 +88,7 @@ class JunitXMLReaderTest extends PHPUnitTestCase
 
     self::assertCount(2, $suiteWithErrorTests->getTestCases());
     self::assertEquals(TestCase::ERROR, $suiteWithErrorTests->getTestCases()[0]->getStatus());
-    self::assertEquals(TestCase::Passed, $suiteWithErrorTests->getTestCases()[1]->getStatus());
+    self::assertEquals(TestCase::PASSED, $suiteWithErrorTests->getTestCases()[1]->getStatus());
 
     // Mensajes de fallo
     self::assertEquals('DivisionByZeroError', $suiteWithErrorTests->getTestCases()[0]->getFailureType());
@@ -145,14 +148,14 @@ class JunitXMLReaderTest extends PHPUnitTestCase
     $suiteWithFailedTests = $rootSuite->getChildSuites()[0]->getChildSuites()[0];
 
     self::assertCount(8, $suiteWithFailedTests->getTestCases());
-    self::assertEquals(TestCase::Failed, $suiteWithFailedTests->getTestCases()[0]->getStatus());
-    self::assertEquals(TestCase::Failed, $suiteWithFailedTests->getTestCases()[1]->getStatus());
-    self::assertEquals(TestCase::Failed, $suiteWithFailedTests->getTestCases()[2]->getStatus());
-    self::assertEquals(TestCase::Passed, $suiteWithFailedTests->getTestCases()[3]->getStatus());
-    self::assertEquals(TestCase::Passed, $suiteWithFailedTests->getTestCases()[4]->getStatus());
-    self::assertEquals(TestCase::Passed, $suiteWithFailedTests->getTestCases()[5]->getStatus());
-    self::assertEquals(TestCase::Passed, $suiteWithFailedTests->getTestCases()[6]->getStatus());
-    self::assertEquals(TestCase::Passed, $suiteWithFailedTests->getTestCases()[7]->getStatus());
+    self::assertEquals(TestCase::FAILED, $suiteWithFailedTests->getTestCases()[0]->getStatus());
+    self::assertEquals(TestCase::FAILED, $suiteWithFailedTests->getTestCases()[1]->getStatus());
+    self::assertEquals(TestCase::FAILED, $suiteWithFailedTests->getTestCases()[2]->getStatus());
+    self::assertEquals(TestCase::PASSED, $suiteWithFailedTests->getTestCases()[3]->getStatus());
+    self::assertEquals(TestCase::PASSED, $suiteWithFailedTests->getTestCases()[4]->getStatus());
+    self::assertEquals(TestCase::PASSED, $suiteWithFailedTests->getTestCases()[5]->getStatus());
+    self::assertEquals(TestCase::PASSED, $suiteWithFailedTests->getTestCases()[6]->getStatus());
+    self::assertEquals(TestCase::PASSED, $suiteWithFailedTests->getTestCases()[7]->getStatus());
 
     // Mensajes de fallo
     self::assertEquals('PHPUnit\Framework\ExpectationFailedException', $suiteWithFailedTests->getTestCases()[0]->getFailureType());

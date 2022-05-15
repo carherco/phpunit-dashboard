@@ -42,9 +42,13 @@ class TestReport
     #[ORM\OneToMany(mappedBy: 'testReport', targetEntity: TestSuite::class, cascade:['persist'])]
     private $testSuites;
 
+    #[ORM\OneToMany(mappedBy: 'report', targetEntity: TestCase::class, orphanRemoval: true)]
+    private $testCases;
+
     public function __construct()
     {
         $this->testSuites = new ArrayCollection();
+        $this->testCases = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -181,6 +185,36 @@ class TestReport
             // set the owning side to null (unless already changed)
             if ($testSuite->getTestReport() === $this) {
                 $testSuite->setTestReport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TestCase>
+     */
+    public function getTestCases(): Collection
+    {
+        return $this->testCases;
+    }
+
+    public function addTestCase(TestCase $testCase): self
+    {
+        if (!$this->testCases->contains($testCase)) {
+            $this->testCases[] = $testCase;
+            $testCase->setReport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestCase(TestCase $testCase): self
+    {
+        if ($this->testCases->removeElement($testCase)) {
+            // set the owning side to null (unless already changed)
+            if ($testCase->getReport() === $this) {
+                $testCase->setReport(null);
             }
         }
 

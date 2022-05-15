@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\TestCase;
+use App\Entity\TestReport;
 use App\Repository\TestCaseRepository;
 use App\Repository\TestReportRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,19 +12,29 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardHomeController extends AbstractController
 {
-    #[Route('/dashboard', name: 'app_dashboard_home')]
-    public function index(TestReportRepository $reportRepository, TestCaseRepository $testCaseRepository): Response
+    #[Route('/dashboard/report/list', name: 'report_list')]
+    public function reportList(TestReportRepository $reportRepository): Response
     {
-        //$lastReport =  $reportRepository->findLastReport();
-        $lastReport =  $reportRepository->find(1);
-        $testCasesWithErrors = $testCaseRepository->findByStatus(TestCase::ERROR);
-        $testCasesWithFailures = $testCaseRepository->findByStatus(TestCase::Failed);
+        $reports =  $reportRepository->findAll();
 
         $output = [
-            'report' => $lastReport,
+            'reports' => array_reverse($reports)
+        ];
+
+        return $this->render('dashboard_home/list.html.twig', $output);
+    }
+
+    #[Route('/dashboard/report/{id}', name: 'report_detail')]
+    public function reportDetail(TestReport $report, TestCaseRepository $testCaseRepository): Response
+    {
+        $testCasesWithErrors = $testCaseRepository->findBy(['report' => $report, 'status' => TestCase::ERROR]);
+        $testCasesWithFailures = $testCaseRepository->findBy(['report' => $report, 'status' => TestCase::FAILED]);
+
+        $output = [
+            'report' => $report,
             'testCasesWithErrorsOrFailures' => array_merge($testCasesWithErrors, $testCasesWithFailures)
         ];
 
-        return $this->render('dashboard_home/index.html.twig', $output);
+        return $this->render('dashboard_home/detail.html.twig', $output);
     }
 }

@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Report List{% endblock %}
+
+{% block stylesheets %}
+    <style>tbody tr { cursor: pointer; }</style>
+{% endblock %}
+
+{% block body %}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Report List</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Report List</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Reports</h3>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tag</th>
+                                    <th>Tests</th>
+                                    <th>Assertions</th>
+                                    <th>Errors</th>
+                                    <th>Failures</th>
+                                    <th>Warnings</th>
+                                    <th>Skipped</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for report in reports %}
+                                <tr onclick="window.location='{{ path('report_detail', {'id': report.id}) }}';">
+                                <tr onclick="window.location='{{ path('report_detail', {'id': report.id}) }}';">
+                                    <td>{{ report.id }}</td>
+                                    <td>{{ report.tag }}</td>
+                                    <td>{{ report.tests }}</td>
+                                    <td>{{ report.assertions }}</td>
+                                    <td>{{ report.errors }}</td>
+                                    <td>{{ report.failures }}</td>
+                                    <td>{{ report.warnings }}</td>
+                                    <td>{{ report.skipped }}</td>
+                                    <td>{{ report.time }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

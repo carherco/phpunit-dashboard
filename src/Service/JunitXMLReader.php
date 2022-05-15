@@ -67,7 +67,7 @@ class JunitXMLReader
     $testCase->setTime((float)$xmlTestCase['time']);
 
     if(isset($xmlTestCase->failure)) {
-      $testCase->setStatus(TestCase::Failed);
+      $testCase->setStatus(TestCase::FAILED);
       $testCase->setFailureType((string)$xmlTestCase->failure['type']);
       $testCase->setMessage((string)$xmlTestCase->failure);
     } else if(isset($xmlTestCase->error)) {
@@ -77,7 +77,7 @@ class JunitXMLReader
     } else if(isset($xmlTestCase->skipped)) {
       $testCase->setStatus(TestCase::SKIPPED);
     } else {
-      $testCase->setStatus(TestCase::Passed);
+      $testCase->setStatus(TestCase::PASSED);
     }
     return $testCase;
   }
@@ -92,12 +92,14 @@ class JunitXMLReader
       if ($xmlElement->getName() === 'testsuite') {
         $suite = $this->buildTestSuiteFromXML($xmlElement);
         $parentSuite->addSuite($suite);
+        $suite->setTestReport($parentSuite->getTestReport());
         $this->processChildren($suite, $xmlElement);
       }
 
       if ($xmlElement->getName() === 'testcase') {
         $testCase = $this->buildTestCaseFromXML($xmlElement);
         $parentSuite->addTestCase($testCase);
+        $testCase->setReport($parentSuite->getTestReport());
       }
     }
   }
