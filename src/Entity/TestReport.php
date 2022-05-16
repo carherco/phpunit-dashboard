@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TestReportRepository::class)]
 class TestReport
 {
+    public const PASSED = "PASSED";
+    public const FAILED = "FAILED";
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -44,6 +47,9 @@ class TestReport
 
     #[ORM\OneToMany(mappedBy: 'report', targetEntity: TestCase::class, orphanRemoval: true)]
     private $testCases;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $date;
 
     public function __construct()
     {
@@ -219,5 +225,25 @@ class TestReport
         }
 
         return $this;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeImmutable $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getStatus() {
+        if($this->errors + $this->failures === 0) {
+            return self::PASSED;
+        }
+
+        return self::FAILED;
     }
 }

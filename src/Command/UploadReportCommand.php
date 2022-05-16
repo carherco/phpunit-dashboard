@@ -2,8 +2,8 @@
 
 namespace App\Command;
 
-use App\Repository\TestReportRepository;
 use App\Service\JunitXMLReader;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -33,6 +33,7 @@ class UploadReportCommand extends Command
         $this
             ->addArgument('reportFileName', InputArgument::REQUIRED, 'Report File Name')
             ->addOption('tag', null, InputOption::VALUE_REQUIRED, 'Tag')
+            ->addOption('datetime', 'd', InputOption::VALUE_OPTIONAL, 'Fecha y hora del reporte. Si no se indica, cogerá la hora actual.')
         ;
     }
 
@@ -41,11 +42,17 @@ class UploadReportCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $reportFileName = $input->getArgument('reportFileName');
         $tag = $input->getOption('tag');
+        $date = $input->getOption('datetime');
+
+        if(is_null($date)) {
+            $date = new DateTimeImmutable();
+        }
 
         $xml = file_get_contents($reportFileName);
         $reader = new JunitXMLReader();
         $report = $reader->parse($xml);
         $report->setTag($tag);
+        $report->setDate($date);
 
         $this->em->persist($report);
         $this->em->flush();

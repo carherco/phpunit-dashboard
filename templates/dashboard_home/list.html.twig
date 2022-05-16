@@ -38,6 +38,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Tag</th>
+                                    <th>Date</th>
                                     <th>Tests</th>
                                     <th>Assertions</th>
                                     <th>Errors</th>
@@ -45,6 +46,7 @@
                                     <th>Warnings</th>
                                     <th>Skipped</th>
                                     <th>Time</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,6 +55,7 @@
                                 <tr onclick="window.location='{{ path('report_detail', {'id': report.id}) }}';">
                                     <td>{{ report.id }}</td>
                                     <td>{{ report.tag }}</td>
+                                    <td>{{ report.date | date('Y-m-d H:i:s') }}</td>
                                     <td>{{ report.tests }}</td>
                                     <td>{{ report.assertions }}</td>
                                     <td>{{ report.errors }}</td>
@@ -60,6 +63,7 @@
                                     <td>{{ report.warnings }}</td>
                                     <td>{{ report.skipped }}</td>
                                     <td>{{ report.time }}</td>
+                                    <td><span class="badge {{ report.status == 'PASSED' ? 'bg-success' : 'bg-danger' }}">{{ report.status }}</span></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
