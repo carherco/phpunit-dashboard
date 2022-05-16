@@ -48,7 +48,7 @@ to see the detail of that report and the messages of its failed tests.
 
 In development mode, you can run a development server with this command:
 
-php -S localhost:8000 -t public/
+> php -S localhost:8000 -t public/
 
 And then go to http://localhost:8000/dashboard/report/list
 
