@@ -41,7 +41,7 @@ To load a report to the dashboard, launch this command in the console
 
 > php bin/console app:upload-report path/to/report.xml --tag myProject
 
-### Visalizing reports
+### Visualizing reports
 
 In your browser, go to the project url /dashboard/report/list to see a list of all reports loaded and click in a report
 to see the detail of that report and the messages of its failed tests.
