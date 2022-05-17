@@ -59,9 +59,9 @@ class JunitXMLReader
   {
     $testCase = new TestCase();
     $testCase->setName((string)$xmlTestCase['name']);
-    $testCase->setClass((int)$xmlTestCase['class']);
-    $testCase->setClassname((int)$xmlTestCase['classname']);
-    $testCase->setFile((int)$xmlTestCase['file']);
+    $testCase->setClass((string)$xmlTestCase['class']);
+    $testCase->setClassname((string)$xmlTestCase['classname']);
+    $testCase->setFile((string)$xmlTestCase['file']);
     $testCase->setLine((int)$xmlTestCase['line']);
     $testCase->setAssertions((int)$xmlTestCase['assertions']);
     $testCase->setTime((float)$xmlTestCase['time']);

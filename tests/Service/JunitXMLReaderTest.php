@@ -3,8 +3,6 @@
 namespace App\Tests\Service;
 
 use App\Entity\TestCase;
-use App\Entity\TestReport;
-use App\Entity\TestSuite;
 use App\Service\JunitXMLReader;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
@@ -51,6 +49,12 @@ class JunitXMLReaderTest extends PHPUnitTestCase
     self::assertCount(2, $testCases);
     self::assertEquals($report, $testCases[0]->getReport());
     self::assertEquals($report, $testCases[1]->getReport());
+    self::assertEquals('misc\HolaMundoTest', $testCases[0]->getClass());
+    self::assertEquals('misc.HolaMundoTest', $testCases[0]->getClassname());
+    self::assertEquals('/Users/carlos/mamp/PruebasUnitarias/tests/misc/HolaMundoTest.php', $testCases[0]->getFile());
+    self::assertEquals(10, $testCases[0]->getLine());
+    self::assertEquals(1, $testCases[0]->getAssertions());
+    self::assertEquals(0.000144, $testCases[0]->getTime());
   }
 
   /**

@@ -2,7 +2,8 @@
     <div class="card-header">
         <h4 class="card-title w-100">
             <a class="d-block w-100 collapsed" data-toggle="collapse" href="#collapse{{ testCase.id }}" aria-expanded="false">
-                {{ testCase.failureType }} - {{ testCase.name }}
+                <div>{{ testCase.class }} - {{ testCase.name }}</div>
+                <small class="small">{{ testCase.failureType }}</small>
             </a>
         </h4>
     </div>
