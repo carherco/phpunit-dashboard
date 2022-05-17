@@ -52,7 +52,6 @@
                             <tbody>
                                 {% for report in reports %}
                                 <tr onclick="window.location='{{ path('report_detail', {'id': report.id}) }}';">
-                                <tr onclick="window.location='{{ path('report_detail', {'id': report.id}) }}';">
                                     <td>{{ report.id }}</td>
                                     <td>{{ report.tag }}</td>
                                     <td>{{ report.date | date('Y-m-d H:i:s') }}</td>
