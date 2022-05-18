@@ -25,6 +25,24 @@
                     <p>Report List</p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>Top failures</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ path('report_slow', {id: report_id}) }}" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>Slowest tests</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>Flaky tests</p>
+                </a>
+            </li>
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

@@ -29,7 +29,7 @@
         {{ include('layout/navbar.html.twig') }}
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            {{ include('layout/sidebar.html.twig') }}
+            {% block sidebar %}{{ include('layout/sidebar.html.twig') }}{% endblock %}
         </aside>
 
         <div class="content-wrapper">

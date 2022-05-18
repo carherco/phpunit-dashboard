@@ -2,6 +2,8 @@
 
 {% block title %}Report List{% endblock %}
 
+{% block sidebar %}{{ include('layout/sidebar_report.html.twig', {report_id: report.id}) }}{% endblock %}
+
 {% block body %}
     <!-- Content Header (Page header) -->
     <div class="content-header">
