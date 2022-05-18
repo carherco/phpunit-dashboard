@@ -37,4 +37,17 @@ class DashboardHomeController extends AbstractController
 
         return $this->render('dashboard_home/detail.html.twig', $output);
     }
+
+    #[Route('/dashboard/report/{id}/slow', name: 'report_slow')]
+    public function reportSlow(TestReport $report, TestCaseRepository $testCaseRepository): Response
+    {
+        $slowestTests = $testCaseRepository->findBy(['report' => $report], ['time' => 'desc'], 20);
+
+        $output = [
+            'report' => $report,
+            'tests' => $slowestTests
+        ];
+
+        return $this->render('dashboard_home/slow.html.twig', $output);
+    }
 }
