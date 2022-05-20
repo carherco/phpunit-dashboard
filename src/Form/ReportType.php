@@ -4,8 +4,11 @@ namespace App\Form;
 
 use App\Entity\TestReport;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class ReportType extends AbstractType
 {
@@ -13,14 +16,24 @@ class ReportType extends AbstractType
     {
         $builder
             ->add('tag')
-            ->add('tests')
-            ->add('assertions')
-            ->add('errors')
-            ->add('warnings')
-            ->add('failures')
-            ->add('skipped')
-            ->add('time')
             ->add('date')
+            // mapped => false es para que symfony no asocie este campo con la entidad
+            ->add('file', FileType::class, array(
+                'mapped' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '8192k',
+                        'mimeTypes' => [
+                            'application/xml',
+                            'text/xml'
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid XML document',
+                    ])
+                ])
+            )
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'submit'],
+            ])
         ;
     }
 
