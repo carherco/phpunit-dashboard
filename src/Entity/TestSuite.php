@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TestSuiteRepository::class)]
+#[ORM\Entity(repositoryClass: TestSuiteRepository::class, readOnly: true)]
 class TestSuite
 {
     #[ORM\Id]

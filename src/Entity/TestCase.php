@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\TestCaseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TestCaseRepository::class)]
+#[ORM\Entity(repositoryClass: TestCaseRepository::class, readOnly: true)]
 class TestCase
 {
     const PASSED = 'passed';
