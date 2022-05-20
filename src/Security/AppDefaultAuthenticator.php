@@ -20,6 +20,7 @@ class AppDefaultAuthenticator extends AbstractLoginFormAuthenticator
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
+    public const DEFAULT_REDIRECT_ROUTE_AFTER_LOGIN = 'report_list';
 
     private UrlGeneratorInterface $urlGenerator;
 
@@ -49,9 +50,7 @@ class AppDefaultAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        return new RedirectResponse($this->urlGenerator->generate(self::DEFAULT_REDIRECT_ROUTE_AFTER_LOGIN));
     }
 
     protected function getLoginUrl(Request $request): string
