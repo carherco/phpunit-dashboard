@@ -57,4 +57,9 @@ class AppDefaultAuthenticator extends AbstractLoginFormAuthenticator
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
+
+    public function supports(Request $request): bool {
+        // return $request->isMethod('POST') && $this->getLoginUrl($request) === $request->getPathInfo();
+        return $request->isMethod('POST') && $this->getLoginUrl($request) === $request->getBaseUrl() . $request->getPathInfo();
+    }
 }
