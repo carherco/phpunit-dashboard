@@ -31,9 +31,11 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    # En Symfony 6: PUBLIC_ACCESS/ IS_AUTHENTICATED_FULLY / IS_AUTHENTICATED_REMEMBERED / IS_REMEMBERED / IS_IMPERSONATOR
     access_control:
         - { path: '^/dashboard', roles: ROLE_USER }
         - { path: '^/upload', roles: ROLE_USER }
+        - { path: '^/login', roles: PUBLIC_ACCESS }
 
 when@test:
     security:
