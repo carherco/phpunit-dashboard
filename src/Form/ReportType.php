@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\TestReport;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +17,11 @@ class ReportType extends AbstractType
     {
         $builder
             ->add('tag')
-            ->add('date')
+            ->add('date', DateTimeType::class, [
+                'date_widget' => 'single_text',
+                'input' => 'datetime_immutable',
+                'time_widget' => 'single_text'
+            ])
             // mapped => false es para que symfony no asocie este campo con la entidad
             ->add('file', FileType::class, array(
                 'mapped' => false,
