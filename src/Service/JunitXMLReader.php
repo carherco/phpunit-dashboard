@@ -5,13 +5,14 @@ namespace App\Service;
 use App\Entity\TestCase;
 use App\Entity\TestReport;
 use App\Entity\TestSuite;
+use Exception;
 use SimpleXMLElement;
 
 class JunitXMLReader
 {
 
   /**
-   * @throws \Exception
+   * @throws Exception
    */
   public function parse(string $xml): TestReport
   {
@@ -82,10 +83,10 @@ class JunitXMLReader
     return $testCase;
   }
 
-  /**
-   * @param TestSuite $parentSuite
-   * @param SimpleXMLElement $xmlRootSuite
-   */
+    /**
+     * @param TestSuite $parentSuite
+     * @param SimpleXMLElement $xmlSuite
+     */
   private function processChildren(TestSuite $parentSuite, SimpleXMLElement $xmlSuite): void
   {
     foreach ($xmlSuite->children() as $xmlElement) {
