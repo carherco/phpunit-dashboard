@@ -10,7 +10,7 @@ class TestCase
 {
     const PASSED = 'passed';
     const FAILED = 'failed';
-    const SKIPPED = 'skypped';
+    const SKIPPED = 'skipped';
     const ERROR = 'error';
 
     #[ORM\Id]
