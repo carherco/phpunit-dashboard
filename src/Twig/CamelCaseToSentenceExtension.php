@@ -30,7 +30,7 @@ class CamelCaseToSentenceExtension extends AbstractExtension
      */
     public function convertCamelCaseToHaveSpacesFilter(string $camelCaseString): string
     {
-        $pattern = '/([A-Z]{1})/';
+        $pattern = '/([A-Z])/';
         return preg_replace_callback(
             $pattern,
             function ($matches) {return " " .$matches[0];},
