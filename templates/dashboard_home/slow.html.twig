@@ -103,7 +103,7 @@
                                 </thead>
                                 <tbody>
                                 {% for testCase in tests %}
-                                    <tr onclick="window.location='{{ path('report_detail', {'id': report.id}) }}';">
+                                    <tr>
                                         <td>{{ loop.index }}</td>
                                         <td>{{ testCase.name | camelCase2spaces }}</td>
                                         <td>{{ testCase.class }}</td>
